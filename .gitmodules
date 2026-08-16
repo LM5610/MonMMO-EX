@@ -10,3 +10,18 @@
 [submodule "decomp/pokeplatinum"]
 	path = decomp/pokeplatinum
 	url = https://github.com/pret/pokeplatinum.git
+[submodule "decomp/pokered"]
+	path = decomp/pokered
+	url = https://github.com/pret/pokered
+[submodule "decomp/pokecrystal"]
+	path = decomp/pokecrystal
+	url = https://github.com/pret/pokecrystal
+[submodule "decomp/pokestadium"]
+	path = decomp/pokestadium
+	url = https://github.com/pret/pokestadium
+[submodule "decomp/pokeyellow"]
+	path = decomp/pokeyellow
+	url = https://github.com/pret/pokeyellow
+[submodule "decomp/pokesword"]
+	path = decomp/pokesword
+	url = https://github.com/notyourav/pokesword
