@@ -1,4 +1,4 @@
-# OpenMMO
+# MonMMO-EX: My WIP changes to MonMMO
 > Message to PokeMMO Devs: *Hold off on any DMCA's for this repository, I am making these changes purely for MonMMO and not to modify PokeMMO, anything you have asked for the removal of will be removed when I have the time*
 
 ## ToC
