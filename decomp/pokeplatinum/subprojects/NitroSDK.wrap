@@ -1,0 +1,10 @@
+[wrap-git]
+url = https://github.com/ntrtwl/NitroSDK.git
+revision = 234d1852be75c9ab5d578df4ec2aa4aa763d32cc
+depth = 1
+directory = NitroSDK-4.2.30001
+
+[provide]
+dependency_names = NitroSDK
+program_names = makelcf
+
