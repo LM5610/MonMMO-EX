@@ -2,9 +2,12 @@ package de.fiereu.openmmo.server.game.storage
 
 import de.fiereu.openmmo.common.DynamicWarp
 import de.fiereu.openmmo.common.enums.Direction
+import de.fiereu.openmmo.common.enums.GameMode
 import de.fiereu.openmmo.common.enums.Region
+import de.fiereu.openmmo.story.generated.galar.GalarFlags
 import de.fiereu.openmmo.story.generated.hoenn.HoennFlags
 import de.fiereu.openmmo.story.generated.hoenn.HoennVars
+import de.fiereu.openmmo.story.generated.johto.JohtoFlags
 import de.fiereu.openmmo.story.generated.kanto.KantoFlags
 
 /**
@@ -24,10 +27,12 @@ internal data class NewGameStart(
 
 internal object NewGameStarts {
 
-  fun forRegion(region: Region, female: Boolean): NewGameStart =
+  fun forRegion(region: Region, female: Boolean, gameMode: GameMode = GameMode.REMAKE): NewGameStart =
       when (region) {
         Region.HOENN -> hoenn(female)
-        Region.KANTO -> kanto()
+        Region.KANTO -> if (GameMode.isClassic(gameMode)) kantoClassic(gameMode) else kanto()
+        Region.JOHTO -> johto()
+        Region.GALAR -> galar()
       }
 
   /** Emerald opens in the moving truck, whose exit goes through the player's dynamic warp. */
@@ -69,5 +74,38 @@ internal object NewGameStarts {
           x = 6,
           y = 6,
           storyFlags = KantoFlags.initiallySet,
+      )
+
+  /** Classic Gen 1/Yellow start — same Pallet bedroom, gameMode var written so the engine
+   *  switches to DV/StatExp formulas and type-based physical/special split. */
+  private fun kantoClassic(gameMode: GameMode): NewGameStart =
+      NewGameStart(
+          bankId = 4,
+          mapId = 1,
+          x = 6,
+          y = 6,
+          storyFlags = KantoFlags.initiallySet,
+          storyVars = mapOf(GameMode.VAR_KEY to gameMode.ordinal),
+      )
+
+  /** Johto (Crystal) — placeholder coords; update once the Johto map bank is imported. */
+  private fun johto(): NewGameStart =
+      NewGameStart(
+          bankId = 100,
+          mapId = 1,
+          x = 4,
+          y = 4,
+          storyFlags = JohtoFlags.initiallySet,
+      )
+
+  /** Galar (Sword/Shield) — placeholder coords; writes MODERN_SWORD game mode. */
+  private fun galar(): NewGameStart =
+      NewGameStart(
+          bankId = 200,
+          mapId = 1,
+          x = 4,
+          y = 4,
+          storyFlags = GalarFlags.initiallySet,
+          storyVars = mapOf(GameMode.VAR_KEY to GameMode.MODERN_SWORD.ordinal),
       )
 }
