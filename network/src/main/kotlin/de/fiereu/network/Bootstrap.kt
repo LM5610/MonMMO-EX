@@ -8,8 +8,7 @@ import io.netty.channel.ChannelInitializer
 /**
  * 为 [ServerBootstrap] (服务端启动类) 安装网络管道并进行初始化配置。
  *
- * 此扩展函数用于服务端的 Netty 引导程序，在每个新接入的客户端连接通道 (Channel) 建立时，
- * 初始化并安装我们自定义的网络处理管道 (Pipeline)。
+ * 此扩展函数用于服务端的 Netty 引导程序，在每个新接入的客户端连接通道 (Channel) 建立时， 初始化并安装我们自定义的网络处理管道 (Pipeline)。
  *
  * @param identity 服务端的身份标识，用于在握手和加密阶段证明服务端身份（如包含 RSA 私钥等信息）。
  * @param applicationProtocol 应用层通信所使用的协议定义（包含了数据包的结构、编解码信息等）。
@@ -27,13 +26,12 @@ fun ServerBootstrap.installNetwork(
     childHandler(
         object : ChannelInitializer<Channel>() {
           /**
-           * 当一个新的 Channel 注册到 EventLoop 时，会回调此方法进行初始化。
-           * 在这里我们将实际的业务编解码器和处理器安装到 Channel 的 Pipeline 中。
+           * 当一个新的 Channel 注册到 EventLoop 时，会回调此方法进行初始化。 在这里我们将实际的业务编解码器和处理器安装到 Channel 的 Pipeline 中。
            */
           override fun initChannel(ch: Channel) {
             installPipeline(
                 pipeline = ch.pipeline(),
-                side = Side.SERVER,  // 指定当前端为服务端
+                side = Side.SERVER, // 指定当前端为服务端
                 identity = identity,
                 applicationProtocol = applicationProtocol,
                 applicationHandlerFactory = applicationHandlerFactory,
@@ -46,8 +44,7 @@ fun ServerBootstrap.installNetwork(
 /**
  * 为 [Bootstrap] (客户端启动类) 安装网络管道并进行初始化配置。
  *
- * 此扩展函数用于客户端的 Netty 引导程序，在主动连接到服务端建立通道 (Channel) 时，
- * 初始化并安装网络处理管道 (Pipeline)。
+ * 此扩展函数用于客户端的 Netty 引导程序，在主动连接到服务端建立通道 (Channel) 时， 初始化并安装网络处理管道 (Pipeline)。
  *
  * @param identity 客户端的身份信任标识，通常包含用于验证服务端身份的公钥等信息。
  * @param applicationProtocol 客户端与服务端通信所使用的应用层协议定义。
@@ -64,9 +61,7 @@ fun Bootstrap.installNetwork(
     // handler 用于配置客户端自身的通道
     handler(
         object : ChannelInitializer<Channel>() {
-          /**
-           * 当客户端成功创建并注册 Channel 时，会回调此方法进行初始化。
-           */
+          /** 当客户端成功创建并注册 Channel 时，会回调此方法进行初始化。 */
           override fun initChannel(ch: Channel) {
             installPipeline(
                 pipeline = ch.pipeline(),
