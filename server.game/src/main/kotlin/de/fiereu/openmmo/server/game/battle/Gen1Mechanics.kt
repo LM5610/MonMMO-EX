@@ -22,11 +22,7 @@ object Gen1StatCalculator {
   /**
    * @param splitSpecial true for Gen 2 (separate SpAtk/SpDef), false for Gen 1 (Special = both).
    */
-  fun computeAll(
-      species: SpeciesDef,
-      pokemon: Pokemon,
-      splitSpecial: Boolean = false
-  ): ComputedStats {
+  fun computeAll(species: SpeciesDef, pokemon: Pokemon, splitSpecial: Boolean = false): ComputedStats {
     val level = pokemon.level.toInt()
     val ivs = pokemon.iVs
     val evs = pokemon.eVs
@@ -36,8 +32,7 @@ object Gen1StatCalculator {
         atk = stat(species.baseAttack, ivs.atk, evs.atk, level),
         def = stat(species.baseDefense, ivs.def, evs.def, level),
         spAtk = special,
-        spDef =
-            if (splitSpecial) stat(species.baseSpDefense, ivs.spDef, evs.spDef, level) else special,
+        spDef = if (splitSpecial) stat(species.baseSpDefense, ivs.spDef, evs.spDef, level) else special,
         spd = stat(species.baseSpeed, ivs.spd, evs.spd, level),
     )
   }
@@ -46,6 +41,5 @@ object Gen1StatCalculator {
 /** Gen 1 critical hit: roll < speed/2 (capped at 255). */
 object Gen1CritRate {
   fun threshold(speed: Int): Int = (speed / 2).coerceAtMost(255)
-
   fun isCrit(roll: Int, speed: Int): Boolean = roll < threshold(speed)
 }
