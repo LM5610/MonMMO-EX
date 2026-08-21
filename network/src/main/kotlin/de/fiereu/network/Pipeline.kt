@@ -22,7 +22,8 @@ import java.util.concurrent.TimeUnit
 /**
  * 为特定的网络通道（Channel）安装和配置 Netty 处理管道（Pipeline）。
  *
- * 该方法负责将各种编解码器、日志记录器、超时处理器以及核心的握手处理器 按照特定的顺序添加到 Netty 的 [ChannelPipeline] 中。
+ * 该方法负责将各种编解码器、日志记录器、超时处理器以及核心的握手处理器
+ * 按照特定的顺序添加到 Netty 的 [ChannelPipeline] 中。
  * 管道中的顺序非常重要，它决定了数据包流入（Inbound）和流出（Outbound）时的处理步骤。
  *
  * @param pipeline Netty 的 ChannelPipeline 实例。
@@ -112,7 +113,8 @@ fun installPipeline(
  *
  * 这样做的目的是为了确保：
  * - 当数据包流入（Inbound）时，数据能在记录日志之前先被解压缩。
- * - 当数据包流出（Outbound）时，记录日志发生在数据被压缩之前。 从而保证日志记录器能够始终记录未压缩的、清晰的数据包信息。
+ * - 当数据包流出（Outbound）时，记录日志发生在数据被压缩之前。
+ * 从而保证日志记录器能够始终记录未压缩的、清晰的数据包信息。
  *
  * @param name 待添加处理器的名称。
  * @param handler 待添加的 ChannelHandler 实例。
