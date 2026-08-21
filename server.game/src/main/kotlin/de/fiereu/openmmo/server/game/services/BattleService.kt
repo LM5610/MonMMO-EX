@@ -4,6 +4,7 @@ import de.fiereu.network.PacketEvent
 import de.fiereu.network.SessionContext
 import de.fiereu.openmmo.common.PokemonMove
 import de.fiereu.openmmo.common.enums.BattleAction
+import de.fiereu.openmmo.common.enums.GameMode
 import de.fiereu.openmmo.common.enums.IVs
 import de.fiereu.openmmo.common.enums.PokemonContainer
 import de.fiereu.openmmo.common.enums.Region
@@ -26,14 +27,12 @@ import de.fiereu.openmmo.server.game.battle.BattleResult
 import de.fiereu.openmmo.server.game.battle.BattleRewards
 import de.fiereu.openmmo.server.game.battle.BattleRng
 import de.fiereu.openmmo.server.game.battle.BattleRules
-import de.fiereu.openmmo.common.enums.GameMode
 import de.fiereu.openmmo.server.game.battle.Gen1StatCalculator
 import de.fiereu.openmmo.server.game.battle.MoveLearner
 import de.fiereu.openmmo.server.game.battle.StatCalculator
 import de.fiereu.openmmo.server.game.battle.TurnEngine
 import de.fiereu.openmmo.server.game.battle.WildMonFactory
 import de.fiereu.openmmo.server.game.battle.acquiredMonsterDelta
-import de.fiereu.openmmo.server.game.services.ClassicModeService
 import de.fiereu.openmmo.server.game.session.PLAYER_STATE
 import de.fiereu.openmmo.server.game.storage.CharacterStore
 import de.fiereu.openmmo.server.game.world.interest.InterestManager
@@ -85,15 +84,23 @@ constructor(
 
   private val pendingLearns = ConcurrentHashMap<Long, PendingMoveLearn>()
 
-  private fun computeStats(charId: Long, species: de.fiereu.openmmo.pokemon.SpeciesDef, mon: de.fiereu.openmmo.common.Pokemon) =
+  private fun computeStats(
+      charId: Long,
+      species: de.fiereu.openmmo.pokemon.SpeciesDef,
+      mon: de.fiereu.openmmo.common.Pokemon
+  ) =
       when (classicMode.getMode(charId)) {
-        GameMode.CLASSIC_RB, GameMode.CLASSIC_YELLOW -> Gen1StatCalculator.computeAll(species, mon, splitSpecial = false)
-        GameMode.CLASSIC_GS, GameMode.CLASSIC_CRYSTAL -> Gen1StatCalculator.computeAll(species, mon, splitSpecial = true)
+        GameMode.CLASSIC_RB,
+        GameMode.CLASSIC_YELLOW -> Gen1StatCalculator.computeAll(species, mon, splitSpecial = false)
+        GameMode.CLASSIC_GS,
+        GameMode.CLASSIC_CRYSTAL -> Gen1StatCalculator.computeAll(species, mon, splitSpecial = true)
         else -> StatCalculator.computeAll(species, mon)
       }
 
-  private fun computeWildStats(species: de.fiereu.openmmo.pokemon.SpeciesDef, mon: de.fiereu.openmmo.common.Pokemon) =
-      StatCalculator.computeAll(species, mon)
+  private fun computeWildStats(
+      species: de.fiereu.openmmo.pokemon.SpeciesDef,
+      mon: de.fiereu.openmmo.common.Pokemon
+  ) = StatCalculator.computeAll(species, mon)
 
   fun onBattlePacket(event: PacketEvent<*>) {
     log.info { "Battle packet ${event.packet::class.simpleName} received: ${event.packet}" }
@@ -305,8 +312,7 @@ constructor(
         val fixed = rolled.copy(iVs = ivs)
         rolled = fixed.copy(hp = computeWildStats(def, fixed).hp.toShort())
       }
-      enemies +=
-          BattleMonState(rolled.id, def, null, rolled, computeWildStats(def, rolled))
+      enemies += BattleMonState(rolled.id, def, null, rolled, computeWildStats(def, rolled))
     }
     log.info {
       "Starting battle for char=$charId (${stored.info.name}) against " +

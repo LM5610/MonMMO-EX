@@ -27,7 +27,11 @@ internal data class NewGameStart(
 
 internal object NewGameStarts {
 
-  fun forRegion(region: Region, female: Boolean, gameMode: GameMode = GameMode.REMAKE): NewGameStart =
+  fun forRegion(
+      region: Region,
+      female: Boolean,
+      gameMode: GameMode = GameMode.REMAKE
+  ): NewGameStart =
       when (region) {
         Region.HOENN -> hoenn(female)
         Region.KANTO -> if (GameMode.isClassic(gameMode)) kantoClassic(gameMode) else kanto()
@@ -76,8 +80,10 @@ internal object NewGameStarts {
           storyFlags = KantoFlags.initiallySet,
       )
 
-  /** Classic Gen 1/Yellow start — same Pallet bedroom, gameMode var written so the engine
-   *  switches to DV/StatExp formulas and type-based physical/special split. */
+  /**
+   * Classic Gen 1/Yellow start — same Pallet bedroom, gameMode var written so the engine switches
+   * to DV/StatExp formulas and type-based physical/special split.
+   */
   private fun kantoClassic(gameMode: GameMode): NewGameStart =
       NewGameStart(
           bankId = 4,
