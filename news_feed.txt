@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>PokeMMO2 公告</title>
+<link>https://4399.com</link>
+<description>PokeMMO2=</description>
+<language>en</language>
+<serverstatus theme="warning">
+<string>内部测试</string>
+</serverstatus>
+<item>
+<title>游戏群：834033304</title>
+<link>
+<![CDATA[ https://4399.com ]]>
+</link>
+<pubDate>Sat, 08 Aug 2026 05:43:03 +0000</pubDate>
+</item>
+<item>
+<title>目前正处于测试阶段，欢迎反馈问题</title>
+<link>
+<![CDATA[ https://pokemmo2.pro ]]>
+</link>
+<pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>
+</item>
+</channel>
+</rss>
